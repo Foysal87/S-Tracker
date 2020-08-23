@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.0.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ="crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']}).then( function() {
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = new google.visualization.DataTable();
+         <%var len=cfUser.contest %>;
+
+        data.addColumn('number', 'Contest');
+        data.addColumn('number', 'Rating');
+        data.addRows(<%=len%>);
+        <% for(var i=0,j=len-1;i<len;i++,j--) { %>
+            data.setCell(<%=i%>, 0, <%=i%>);
+            data.setCell(<%=i%>, 1, parseInt('<%=cfUser.previousRating[j][1]%>'));
+            <%}%>
+            var ranges = [
+    [1000, 1200, '#55552b'],    // red
+    [1200, 1400, '#33cc33'],   // yellow
+    [1400, 1600, '#1e7b1e'],   // green
+    [1600, 1900, '#1e88e5'],  // blue
+    [1900, 2200, '#732673'],
+    [2200, 2400, '#ff8000'],  // red
+    [2400, null, '#cc0000'],
+  ];
+
+  var view = new google.visualization.DataView(data);
+  view.setColumns([0, 1, {
+    calc: function (dt, row) {
+      var rowValue = dt.getValue(row, 1);
+      var color;
+      ranges.forEach(function (range, index) {
+        if ((rowValue >= range[0]) && ((rowValue < range[1]) || (range[1] === null))) {
+          color = range[2];
+        }
+      });
+      return color;
+    },
+    role: 'style',
+    type: 'string'
+  }]);
+        var options = {
+         chartArea:{width:'85%',height:'70%'},
+         backgroundColor: '',
+          title: 'Codeforces Rating Curve',
+          hAxis: {title: 'Contest', minValue: 0, maxValue: <%=len%>+1,gridlines: {
+            count: Math.ceil(<%=len%>* 1.1 / <%=len%>)
+        }},
+          vAxis: {title: 'Rating', minValue: 1000, maxValue: parseInt(<%=cfUser.highestRating%>) , gridlines: {
+            count: Math.ceil(<%=cfUser.highestRating%> * 1.1 /(<%=cfUser.highestRating%>-500))
+        },gridlines: {
+          color: 'Black'
+    }, series:{0:{color:'#BBBBBB',lineWidth:10},1:{color:'#CCCCCC',lineWidth:10},2:{color:'yellow'},3:{color:'orange'},4:{color:'red'}}
+},
+          curveType: 'function',
+          pointSize: 5,
+          legend: { position: 'bottom'},
+          colors: ['black']
+        };
+        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+        chart.draw(view, options);
+      }
+    });
+    </script>
+<title>Profile</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<link href="/register.css" rel="stylesheet" type="text/css" media="all" />
+<link href="/profile.css" rel="stylesheet" type="text/css" media="all" />
+<link href="//fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Work+Sans:400,600,700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-mainbg">
+        <a class="navbar-brand navbar-logo" href="/profile">S<strong>Tracker</strong></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars text-white"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <div class="hori-selector"><div class="left"></div><div class="right"></div></div>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/profile"><i class="far fa-calendar-alt"></i>profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="profile/contestScheduleUser"><i class="far fa-clone"></i>Contest Schedule</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="profile/info"><i class="far fa-clone"></i>Info</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="profile/Group"><i class="far fa-clone"></i>Group</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="profile/friends"><i class="far fa-clone"></i>Friends</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="profile/logout"><i class="far fa-copy"></i>Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="main-w3layouts wrapper">
+        <% if(success_msg!=''){ %>
+		<div class="main-agileinfo" style="padding:1em;">
+		
+            <div class="msg">
+                <strong>Hello 
+                <%
+                if(Uusername!=''){ %>
+                    <%=Uusername%>
+                    <%
+                }
+                %>  
+                !  
+                </strong>
+               <%=success_msg%>
+			  </div>
+            <% } %>  
+
+        </div>
+        
+
+    <div class="container emp-profile">
+        <form method="post">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="profile-img">
+                        <img src="../img/images.png" alt=""/>
+                        <div class="file btn btn-lg btn-primary">
+                            Change Photo
+                            <input type="file" name="file"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="profile-head">
+                                <h5>
+                                    @<%=username%>
+                                  </h5>
+                                <h6 style="color:white;">
+                                    <%=fullname%>
+                                </h6>
+                                <p class="proile-rating" style="padding-bottom: 10px;">RANKINGS : <span>-/--</span></p>
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Timeline</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <a href="/profile/info" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>Edit Profile</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="profile-work">
+                        <p style="color: rgb(247, 101, 3);">ID LINK</p>
+                        <a href="https://codeforces.com/profile/<%= typeof cfUser.ojname!='undefined' ? cfUser.ojname : ''%>" target="_blank"  >Codeforces Profile</a><br/>
+                        <a href="https://www.codechef.com/users/<%= typeof codechefUser.ojname!='undefined' ? codechefUser.ojname : ''%>" target="_blank" >Codechef Profile</a><br/>
+                        <a href="https://www.hackerrank.com/<%= typeof hackerrankUser.ojname!='undefined' ? hackerrankUser.ojname : ''%>" target="_blank">Hackerrank Profile</a><br/>
+                        <a href="https://uhunt.onlinejudge.org/id/<%= typeof uvaUser.ojname!='undefined' ? uvaUser.ojname : ''%>" target="_blank">Uva Profile</a><br/>
+                        <p style="color:  rgb(247, 101, 3);">SKILLS</p>
+                        <a href="">Web Designer</a><br/>
+                        <a href="">Web Developer</a><br/>
+                        <a href="">Competitive Programmer</a><br/>
+                        
+
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="tab-content profile-tab" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Stracker Username</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p><%=username%></p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Name</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p><%=fullname%></p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Email</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p><%=email%></p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Phone</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p>--- --- ---</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Profession</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p>Student</p>
+                                        </div>
+                                    </div>
+                        </div>
+                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Total Problem Solved</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <%
+                                            var total=0;
+                            
+                                            if(typeof cfUser.solvedProblem!='undefined') total+=cfUser.solvedProblem
+                                            if(typeof codechefUser.solvedProblem!='undefined') total+=codechefUser.solvedProblem
+                                            if(typeof uvaUser.solvedProblem!='undefined') total+=uvaUser.solvedProblem
+                                            if(typeof hackerrankUser.solvedProblem!='undefined') total+=hackerrankUser.solvedProblem
+                                            %>
+                                            <p><%=total%></p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Total Contest</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <%
+                                            var total=0;
+                            
+                                            if(typeof cfUser.contest!='undefined') total+=cfUser.contest
+                                            if(typeof codechefUser.contest!='undefined') total+=codechefUser.contest
+                                            if(typeof hackerrankUser.contest!='undefined') total+=hackerrankUser.contest
+                                            %>
+                                            <p><%=total%></p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Current Average Rating</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <%
+                                            var total=0;
+                            
+                                            if(typeof cfUser.rating!='undefined') total+=cfUser.rating
+                                            if(typeof codechefUser.rating!='undefined') total+=codechefUser.rating
+                                            if(typeof hackerrankUser.rating!='undefined') total+=hackerrankUser.rating
+                                            %>
+                                            <p><%=(total/3.0)%></p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Current Highest Rating</label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <%
+                                            var total=0;
+                                            var st="";
+                                            if(typeof cfUser.rating!='undefined') {if(total<cfUser.rating) {total=cfUser.rating; st='codeforces'}}
+                                            if(typeof codechefUser.rating!='undefined') {if(total<codechefUser.rating) {total=codechefUser.rating; st='codechef'}}
+                                            if(typeof hackerrankUser.rating!='undefined') {if(total<hackerrankUser.rating) {total=hackerrankUser.rating; st='hackerrank'}}
+                                            %>
+                                            <p><%=total%>(<%=st%>)</p>
+                                        </div>
+                                    </div>
+                                   
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>           
+    </div>
+
+    <div class="warpper1">
+        <input class="radio" id="one" name="group" type="radio" checked>
+        <input class="radio" id="two" name="group" type="radio">
+        <input class="radio" id="three" name="group" type="radio">
+        <input class="radio" id="four" name="group" type="radio">
+        <div class="tabs">
+        <label class="tab" id="one-tab" for="one">Codeforces</label>
+        <label class="tab" id="two-tab" for="two">Codechef</label>
+        <label class="tab" id="three-tab" for="three">Hackerank</label>
+        <label class="tab" id="four-tab" for="four">Uva</label>
+          </div>
+        <div class="panels">
+        <div class="panel" id="one-panel">
+            <% if(cfUser!=''){%>
+                <div class='main-agileinfo1'>
+                 <div class='main-agileinfo2'>
+                     <h1>Codeforces Profile</h1>
+                     <div class="agileits-top">
+                         <div class="row">
+                             <div class="col-md-6" style="text-align: right;">
+                             <label>Username</label>
+                             </div>
+                             <div class="col-md-6">
+                             <p><%=cfUser.ojname%></p>
+                             </div>
+                         </div>
+                         <div class="row">
+                             <div class="col-md-6" style="text-align: right;">
+                             <label>Total Contest</label>
+                             </div>
+                             <div class="col-md-6">
+                             <p><%=cfUser.contest%></p>
+                             </div>
+                         </div>
+                         <div class="row">
+                             <div class="col-md-6" style="text-align: right;">
+                             <label> Total Solved problem in contesttime</label>
+                             </div>
+                             <div class="col-md-6">
+                             <p><%=cfUser.solvedProblem%></p>
+                             </div>
+                         </div>
+                         <div class="row">
+                             <div class="col-md-6" style="text-align: right;">
+                             <label> Highest Rating</label>
+                             </div>
+                             <div class="col-md-6">
+                             <p><%=cfUser.highestRating%></p>
+                             </div>
+                         </div>
+                         <div class="row">
+                             <div class="col-md-6" style="text-align: right;">
+                             <label> Current Rating</label>
+                             </div>
+                             <div class="col-md-6">
+                             <p><%=cfUser.rating%></p>
+                             </div>
+                         </div>
+                         <div class="row">
+                             <div class="col-md-6" style="text-align: right;">
+                             <label>Last Contest Rank</label>
+                             </div>
+                             <div class="col-md-6">
+                             <p><%=cfUser.lastContestRank%></p>
+                             </div>
+                         </div>
+         
+                     </div>
+                 </div>
+                 <div id="chart_div"></div>
+                </div>
+                <% } %>
+        </div>
+        <div class="panel" id="two-panel">
+            <% if(codechefUser!='') {%>
+        <div class='main-agileinfo1'>
+        <div class='main-agileinfo2'>
+            <h1>Codechef Profile</h1>
+            <div class="agileits-top">
+                <div class="row">
+                    <div class="col-md-6" style="text-align: right;">
+                    <label>Username</label>
+                    </div>
+                    <div class="col-md-6">
+                    <p><%=codechefUser.ojname%></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6" style="text-align: right;">
+                    <label> Total Solved problem</label>
+                    </div>
+                    <div class="col-md-6">
+                    <p><%=codechefUser.solvedProblem%></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6" style="text-align: right;">
+                    <label> Highest Rating</label>
+                    </div>
+                    <div class="col-md-6">
+                    <p><%=codechefUser.highestRating%></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6" style="text-align: right;">
+                    <label> Current Rating</label>
+                    </div>
+                    <div class="col-md-6">
+                    <p><%=codechefUser.rating%></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6" style="text-align: right;">
+                    <label>Last Contest Rank</label>
+                    </div>
+                    <div class="col-md-6">
+                    <p><%=codechefUser.lastContestRank%></p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        </div>
+
+        <% } %>
+        </div>
+        <div class="panel" id="three-panel">
+            <% if(hackerrankUser!='') {%>
+        <div class='main-agileinfo1'>
+        <div class='main-agileinfo2'>
+            <h1>Hackerrank Profile</h1>
+            <div class="agileits-top">
+                <div class="row">
+                    <div class="col-md-6" style="text-align: right;">
+                    <label>Username</label>
+                    </div>
+                    <div class="col-md-6">
+                    <p><%=hackerrankUser.ojname%></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6" style="text-align: right;">
+                    <label> Total Solved problem</label>
+                    </div>
+                    <div class="col-md-6">
+                    <p><%=hackerrankUser.solvedProblem%></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6" style="text-align: right;">
+                    <label> Highest Rating</label>
+                    </div>
+                    <div class="col-md-6">
+                    <p><%=hackerrankUser.highestRating%></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6" style="text-align: right;">
+                    <label> Current Rating</label>
+                    </div>
+                    <div class="col-md-6">
+                    <p><%=hackerrankUser.rating%></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6" style="text-align: right;">
+                    <label>Last Contest Rank</label>
+                    </div>
+                    <div class="col-md-6">
+                    <p><%=hackerrankUser.lastContestRank%></p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        </div>
+
+        <% } %>
+        </div>
+        <div class="panel" id="four-panel">
+            <% if(uvaUser!='') {%>
+        <div class='main-agileinfo1'>
+        <div class='main-agileinfo2'>
+            <h1>Uva Profile</h1>
+            <div class="agileits-top">
+                <div class="row">
+                    <div class="col-md-6" style="text-align: right;">
+                    <label>Username</label>
+                    </div>
+                    <div class="col-md-6">
+                    <p><%=uvaUser.ojname%></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6" style="text-align: right;">
+                    <label>Total Solved problem</label>
+                    </div>
+                    <div class="col-md-6">
+                    <p><%=uvaUser.solvedProblem%></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6" style="text-align: right;">
+                    <label>World Rank</label>
+                    </div>
+                    <div class="col-md-6">
+                    <p><%=uvaUser.lastContestRank%></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6" style="text-align: right;">
+                    <label>Total Submission</label>
+                    </div>
+                    <div class="col-md-6">
+                    <p><%=uvaUser.contest%></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6" style="text-align: right;">
+                    <label>Solved problem</label>
+                    </div>
+                    <div class="col-md-6">
+                    <% var arr=new Array();
+                    for(var i=0;i<uvaUser.solvedProblem;i++){
+                         arr.push(uvaUser.previousRating[i][1]);
+                    }
+                    %>
+                    <textarea readonly rows='10' cols="50" style="color: blanchedalmond; background-color: rgb(243, 105, 6); padding: 1em; margin: 3px;"><%= arr
+                   
+                    %></textarea>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        </div>
+
+        <% } %>
+          </div>
+        </div>
+      </div>
+      
+		<ul class="colorlib-bubbles">
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+        </ul>
+     
+    </div>
+
+    
+    
+    <script>
+        // ---------Responsive-navbar-active-animation-----------
+function test(){
+  var tabsNewAnim = $('#navbarSupportedContent');
+  var selectorNewAnim = $('#navbarSupportedContent').find('li').length;
+  var activeItemNewAnim = tabsNewAnim.find('.active');
+  var activeWidthNewAnimHeight = activeItemNewAnim.innerHeight();
+  var activeWidthNewAnimWidth = activeItemNewAnim.innerWidth();
+  var itemPosNewAnimTop = activeItemNewAnim.position();
+  var itemPosNewAnimLeft = activeItemNewAnim.position();
+  $(".hori-selector").css({
+    "top":itemPosNewAnimTop.top + "px", 
+    "left":itemPosNewAnimLeft.left + "px",
+    "height": activeWidthNewAnimHeight + "px",
+    "width": activeWidthNewAnimWidth + "px"
+  });
+  $("#navbarSupportedContent").on("click","li",function(e){
+    $('#navbarSupportedContent ul li').removeClass("active");
+    $(this).addClass('active');
+    var activeWidthNewAnimHeight = $(this).innerHeight();
+    var activeWidthNewAnimWidth = $(this).innerWidth();
+    var itemPosNewAnimTop = $(this).position();
+    var itemPosNewAnimLeft = $(this).position();
+    $(".hori-selector").css({
+      "top":itemPosNewAnimTop.top + "px", 
+      "left":itemPosNewAnimLeft.left + "px",
+      "height": activeWidthNewAnimHeight + "px",
+      "width": activeWidthNewAnimWidth + "px"
+    });
+  });
+}
+$(document).ready(function(){
+  setTimeout(function(){ test(); });
+});
+$(window).on('resize', function(){
+  setTimeout(function(){ test(); }, 500);
+});
+$(".navbar-toggler").click(function(){
+  setTimeout(function(){ test(); });
+});
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="-1" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<title>Infos</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<link href="/register.css" rel="stylesheet" type="text/css" media="all" />
+<link href="//fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-mainbg">
+        <a class="navbar-brand navbar-logo" href="/profile">S<strong>Tracker</strong></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars text-white"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <div class="hori-selector"><div class="left"></div><div class="right"></div></div>
+                <li class="nav-item">
+                    <a class="nav-link" href="/profile"><i class="far fa-calendar-alt"></i>profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/profile/contestScheduleUser"><i class="far fa-clone"></i>Contest Schedule</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/profile/info"><i class="far fa-clone"></i>Info</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Group"><i class="far fa-clone"></i>Group</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/friends"><i class="far fa-clone"></i>Friends</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout"><i class="far fa-copy"></i>Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="main-w3layouts wrapper">
+      <div class="main-agileinfo">
+        <h1>Your Info</h1>
+        <% if( success_msg!=''){ %>
+          <div class="msg">
+             <%=success_msg%>
+            </div>
+          <% } %> 
+          <% 
+            if(typeof passwordError!='undefined'){ %>
+              <div class ="msg2">
+                    <%=passwordError %>
+              </div> <% } %>
+        <div class="agileits-top">
+          <form id="myform" action="/profile/info" method="post" autocomplete="off">
+            <input type="submit" value="Update Info">
+            <div class="input1">
+              <div class="msg3">Full Name</div>
+             <input class="tet" type="tet" name="fullname" placeholder="Fullname" required="" value="<%= typeof fullname!='undefined' ? fullname : ''%>">
+            </div>
+            <div class="input1">
+              <div class="msg3">Username <span>(Can't Change)</span></div>
+            <input class="tet" type="tet" name="username" style="color: yellowgreen;" placeholder="Username" readonly value="<%= typeof username!='undefined' ? username : '' %>">
+            </div>
+            <div class="input1">
+              <div class="msg3">Email <span>(Can't Change)</span></div>
+            <input class="tet" type="tet" name="email" placeholder="Email" style="color: yellowgreen;" readonly value="<%= typeof email!='undefined'? email : '' %>">
+           </div>
+           <div class="input1">
+            <div class="msg3">Codeforces Username</div>
+            <input class="tet" type="tet" name="cfUsername" placeholder="Codeforces Username" value="<%= typeof cfUsername!='undefined' ? cfUsername : ''%>">
+            </div>
+            <div class="input1">
+              <div class="msg3">Codechef Username</div>
+            <input class="tet" type="tet" name="codechefUsername" placeholder="Codechef Username" value="<%= typeof codechefUsername!='undefined' ? codechefUsername : ''%>">
+            </div>
+            <div class="input1">
+              <div class="msg3">Uva Username</div>
+            <input class="tet" type="tet" name="uvaUsername" placeholder="Uva Username" value="<%= typeof uvaUsername!='undefined' ? uvaUsername : ''%>">
+            </div>
+            <div class="input1">
+              <div class="msg3">Hackerrank Username</div>
+            <input class="tet" type="tet" name="hackerrankUsername" placeholder="Hackerrank Username" value="<%= typeof hackerrankUsername!='undefined' ? hackerrankUsername : ''%>">
+            </div>
+            <div class="input1">
+              <div class="msg3">Password</div>
+            <input class="tet" type="password2" name="password" placeholder="Password" required="">
+            </div>
+            
+            <div class="input1">
+              <div class="msg3">Confirm Password</div>
+            <input class="tet w3lpass" type="password2" name="conpassword" placeholder="Confirm Password" required="">
+            </div>
+            </form>
+        </div>
+      </div>
+      <ul class="colorlib-bubbles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </div>
+    <script>
+
+        // ---------Responsive-navbar-active-animation-----------
+function test(){
+  var tabsNewAnim = $('#navbarSupportedContent');
+  var selectorNewAnim = $('#navbarSupportedContent').find('li').length;
+  var activeItemNewAnim = tabsNewAnim.find('.active');
+  var activeWidthNewAnimHeight = activeItemNewAnim.innerHeight();
+  var activeWidthNewAnimWidth = activeItemNewAnim.innerWidth();
+  var itemPosNewAnimTop = activeItemNewAnim.position();
+  var itemPosNewAnimLeft = activeItemNewAnim.position();
+  $(".hori-selector").css({
+    "top":itemPosNewAnimTop.top + "px", 
+    "left":itemPosNewAnimLeft.left + "px",
+    "height": activeWidthNewAnimHeight + "px",
+    "width": activeWidthNewAnimWidth + "px"
+  });
+  $("#navbarSupportedContent").on("click","li",function(e){
+    $('#navbarSupportedContent ul li').removeClass("active");
+    $(this).addClass('active');
+    var activeWidthNewAnimHeight = $(this).innerHeight();
+    var activeWidthNewAnimWidth = $(this).innerWidth();
+    var itemPosNewAnimTop = $(this).position();
+    var itemPosNewAnimLeft = $(this).position();
+    $(".hori-selector").css({
+      "top":itemPosNewAnimTop.top + "px", 
+      "left":itemPosNewAnimLeft.left + "px",
+      "height": activeWidthNewAnimHeight + "px",
+      "width": activeWidthNewAnimWidth + "px"
+    });
+  });
+}
+$(document).ready(function(){
+  setTimeout(function(){ test(); });
+});
+$(window).on('resize', function(){
+  setTimeout(function(){ test(); }, 500);
+});
+$(".navbar-toggler").click(function(){
+  setTimeout(function(){ test(); });
+});
+    </script>
+    
+</body>
+</html>
+<script src="jquery-3.2.1.min.js"></script>
+<script src="script.js"></script>

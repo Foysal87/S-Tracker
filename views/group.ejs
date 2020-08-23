@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.0.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ="crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<title>Groups</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<link href="/group.css" rel="stylesheet" type="text/css" media="all" />
+<link href="/register.css" rel="stylesheet" type="text/css" media="all" />
+<link href="//fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Work+Sans:400,600,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-mainbg">
+        <a class="navbar-brand navbar-logo" href="/profile">S<strong>Tracker</strong></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars text-white"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <div class="hori-selector"><div class="left"></div><div class="right"></div></div>
+                <li class="nav-item">
+                    <a class="nav-link" href="/profile"><i class="far fa-calendar-alt"></i>profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/profile/contestScheduleUser"><i class="far fa-clone"></i>Contest Schedule</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/profile/info"><i class="far fa-clone"></i>Info</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/profile/Group"><i class="far fa-clone"></i>Group</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/profile/friends"><i class="far fa-clone"></i>Friends</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/profile/logout"><i class="far fa-copy"></i>Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="main-w3layouts wrapper">
+      <div class="main-agileinfo2">
+    <h1>Groups</h1>
+    <% if(typeof msg!='undefined'){ %>
+      <div class="msg2">
+         <%=msg%>
+        </div>
+      <% } %> 
+      <% if(typeof arr!='undefined') { 
+        
+       // console.log(arr.length);
+        for(var i=0;i<arr.length;i++)
+        { %>
+          <a class="groupname far fa-clone btn"  href="/profile/group/groupCreate/<%=arr[i][0]%>"> <%= arr[i][1]%>  </a>
+        <%
+          }
+         } %>
+      
+    <div class="agileits-top">
+        <form id="myfrom2" action="/profile/group" method="post">
+          <input type="text" type="text" name="groupName" placeholder="Write a Name for create new Group" value="" required='true' />
+          <input type="submit" value="Create Group">
+        </form>
+    
+    </div>
+  </div>
+  <ul class="colorlib-bubbles">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+  </ul>
+</div>
+    
+
+    
+    <script>
+        // ---------Responsive-navbar-active-animation-----------
+function test(){
+  var tabsNewAnim = $('#navbarSupportedContent');
+  var selectorNewAnim = $('#navbarSupportedContent').find('li').length;
+  var activeItemNewAnim = tabsNewAnim.find('.active');
+  var activeWidthNewAnimHeight = activeItemNewAnim.innerHeight();
+  var activeWidthNewAnimWidth = activeItemNewAnim.innerWidth();
+  var itemPosNewAnimTop = activeItemNewAnim.position();
+  var itemPosNewAnimLeft = activeItemNewAnim.position();
+  $(".hori-selector").css({
+    "top":itemPosNewAnimTop.top + "px", 
+    "left":itemPosNewAnimLeft.left + "px",
+    "height": activeWidthNewAnimHeight + "px",
+    "width": activeWidthNewAnimWidth + "px"
+  });
+  $("#navbarSupportedContent").on("click","li",function(e){
+    $('#navbarSupportedContent ul li').removeClass("active");
+    $(this).addClass('active');
+    var activeWidthNewAnimHeight = $(this).innerHeight();
+    var activeWidthNewAnimWidth = $(this).innerWidth();
+    var itemPosNewAnimTop = $(this).position();
+    var itemPosNewAnimLeft = $(this).position();
+    $(".hori-selector").css({
+      "top":itemPosNewAnimTop.top + "px", 
+      "left":itemPosNewAnimLeft.left + "px",
+      "height": activeWidthNewAnimHeight + "px",
+      "width": activeWidthNewAnimWidth + "px"
+    });
+  });
+}
+$(document).ready(function(){
+  setTimeout(function(){ test(); });
+});
+$(window).on('resize', function(){
+  setTimeout(function(){ test(); }, 500);
+});
+$(".navbar-toggler").click(function(){
+  setTimeout(function(){ test(); });
+});
+    </script>
+    
+</body>
+</html>

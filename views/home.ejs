@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="icon" href="../img/favicon.ico">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<title>Home</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<link href="register.css" rel="stylesheet" type="text/css" media="all" />
+<link href="//fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-mainbg">
+      <a class="navbar-brand navbar-logo" href="/">S<strong>Tracker</strong></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars text-white"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <div class="hori-selector"><div class="left"></div><div class="right"></div></div>
+                <li class="nav-item active">
+                    <a class="nav-link " href="/"><i class="fas fa-tachometer-alt"></i>Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/about"><i class="far fa-address-book"></i>About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/contestSchedule"><i class="far fa-clone"></i>Contest Schedule</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link regi" href="/register"><i class="far fa-copy"></i>SIGN UP</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link regi" href="/login"><i class="far fa-copy"></i>LOGIN</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <div class="main-w3layouts wrapper">
+      <div class="main-agileinfo" style="width:80%;">
+       <p class="msg">Welcome Everyone</p>
+
+   </div>
+      <div class="main-agileinfo">
+        <% if( error_msg!=''){ %>
+					<div class="msg2">
+					   <%=error_msg%>
+					  </div>
+          <% } %>  
+        <div class="agileits-top">
+
+    <form id="myfrom3" action="/" method="post">
+      <input type="text" name="name" placeholder="Search By Username For visit" onkeyup="showResult(this.value)"/>
+      <p>Suggestions: <span id="txtHint"></span></p>
+      <input type="submit" value="GO">
+     </form> 
+  </div>
+</div>
+<ul class="colorlib-bubbles">
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+  <li></li>
+    </ul>
+</div>
+    <script>
+
+        // ---------Responsive-navbar-active-animation-----------
+function test(){
+  var tabsNewAnim = $('#navbarSupportedContent');
+  var selectorNewAnim = $('#navbarSupportedContent').find('li').length;
+  var activeItemNewAnim = tabsNewAnim.find('.active');
+  var activeWidthNewAnimHeight = activeItemNewAnim.innerHeight();
+  var activeWidthNewAnimWidth = activeItemNewAnim.innerWidth();
+  var itemPosNewAnimTop = activeItemNewAnim.position();
+  var itemPosNewAnimLeft = activeItemNewAnim.position();
+  $(".hori-selector").css({
+    "top":itemPosNewAnimTop.top + "px", 
+    "left":itemPosNewAnimLeft.left + "px",
+    "height": activeWidthNewAnimHeight + "px",
+    "width": activeWidthNewAnimWidth + "px"
+  });
+  $("#navbarSupportedContent").on("click","li",function(e){
+    $('#navbarSupportedContent ul li').removeClass("active");
+    $(this).addClass('active');
+    var activeWidthNewAnimHeight = $(this).innerHeight();
+    var activeWidthNewAnimWidth = $(this).innerWidth();
+    var itemPosNewAnimTop = $(this).position();
+    var itemPosNewAnimLeft = $(this).position();
+    $(".hori-selector").css({
+      "top":itemPosNewAnimTop.top + "px", 
+      "left":itemPosNewAnimLeft.left + "px",
+      "height": activeWidthNewAnimHeight + "px",
+      "width": activeWidthNewAnimWidth + "px"
+    });
+  });
+}
+$(document).ready(function(){
+  setTimeout(function(){ test(); });
+});
+$(window).on('resize', function(){
+  setTimeout(function(){ test(); }, 500);
+});
+$(".navbar-toggler").click(function(){
+  setTimeout(function(){ test(); });
+});
+
+function showResult(str) {
+//console.log(str);
+ if (str.length == 0) { 
+    document.getElementById("txtHint").innerHTML = "";
+    return;
+  }
+
+var xmlHttp = null;
+xmlHttp = new XMLHttpRequest();
+xmlHttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+    var txt=JSON.parse(this.responseText);
+    var result="";
+   // console.log(txt.data);
+   if(txt.data.length==0) 
+   {
+       result="No user available";
+   }
+   
+    for(var i=0;i<txt.data.length;i++)
+    {
+        if(i!=txt.data.length-1)
+        result+=txt.data[i]['username']+' , ';
+        else result +=txt.data[i]['username'];
+    }
+   // console.log(result);
+    
+      document.getElementById("txtHint").innerHTML =
+      result;
+    }
+  };
+xmlHttp.open( "GET", "/admin/users?search="+str, true );
+xmlHttp.send( null );
+
+}
+    </script>
+    
+</body>
+</html>

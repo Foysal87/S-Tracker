@@ -1,0 +1,194 @@
+
+  .wrapper2 {
+    position: relative;
+    overflow: hidden;
+    padding:12px 0 1em;
+    width: 100%;
+  }
+
+/* contest section template*/
+.contest-section {
+    background: #01306e00;
+    margin: 2em;
+}
+
+.section-title {
+	margin-bottom: 45px;
+	text-align: center;
+	letter-spacing: 3px;
+}
+
+.section-title span {
+	font-size: 16px;
+	color: #f36100;
+	text-transform: uppercase;
+	font-weight: 700;
+}
+
+.section-title h2 {
+	color: #ffffff;
+	font-size: 32px;
+	font-weight: 600;
+	text-transform: uppercase;
+	margin-top: 8px;
+}
+
+
+.ps-item {
+	text-align: center;
+	padding: 40px 30px 52px;
+	background-color: rgba(255, 235, 205, 0.425);
+	border: 2px solid #f3f1f1;
+	-webkit-transform: skewY(-4deg);
+	-ms-transform: skewY(-4deg);
+	transform: skewY(-4deg);
+	-webkit-transition: all 0.5s;
+	-o-transition: all 0.5s;
+	transition: all 0.5s;
+	margin-bottom: 30px;
+	position: relative;
+}
+.contest-section .middle{
+    background-color: rgba(14, 14, 14, 0.575);
+}
+
+.ps-item:hover {
+	background: #ffffff;
+	border-color: #0a0a0a;
+	-webkit-transform: skewY(0deg);
+	-ms-transform: skewY(0deg);
+	transform: skewY(0deg);
+	-webkit-transition: all 0.5s;
+	-o-transition: all 0.5s;
+	transition: all 0.5s;
+}
+
+.ps-item:hover h3 {
+	color: #111111;
+}
+
+.ps-item:hover .pi-price span {
+	color: #444444;
+}
+
+.ps-item:hover ul li {
+	color: #111111;
+	font-weight: 600;
+}
+
+.ps-item:hover .primary-btn.pricing-btn {
+	background: #f36100;
+}
+
+.ps-item:hover .thumb-icon {
+	opacity: 1;
+	visibility: visible;
+}
+
+.ps-item h3 {
+	font-size: 28px;
+	color: #ffffff;
+	font-weight: 600;
+	margin-bottom: 16px;
+	-webkit-transform: skewY(4deg);
+	-ms-transform: skewY(4deg);
+	transform: skewY(4deg);
+}
+
+.ps-item .pi-price {
+	margin-bottom: 30px;
+	-webkit-transform: skewY(4deg);
+	-ms-transform: skewY(4deg);
+	transform: skewY(4deg);
+}
+
+.ps-item .pi-price h2 {
+	font-size: 30px;
+	color: #f36100;
+	font-weight: 600;
+	padding-bottom: 10px;
+}
+
+.ps-item .pi-price span {
+	color: #c4c4c4;
+	font-size: 16px;
+	font-weight: 700;
+	text-transform: uppercase;
+}
+
+.ps-item ul {
+	margin-bottom: 40px;
+	-webkit-transform: skewY(4deg);
+	-ms-transform: skewY(4deg);
+	transform: skewY(4deg);
+}
+
+.ps-item ul li {
+	font-size: 14px;
+	color: #c4c4c4;
+	line-height: 32px;
+	list-style: none;
+}
+
+.ps-item .primary-btn.pricing-btn {
+	display: block;
+	background: #333333;
+	-webkit-transform: skewY(4deg);
+	-ms-transform: skewY(4deg);
+	transform: skewY(4deg);
+}
+
+.ps-item .thumb-icon {
+	font-size: 48px;
+	color: #f36100;
+	position: absolute;
+	left: 50px;
+	bottom: 120px;
+	-webkit-transform: skewY(4deg);
+	-ms-transform: skewY(4deg);
+	transform: skewY(4deg);
+	opacity: 0;
+	visibility: hidden;
+}
+
+
+
+
+/* table style*/
+
+#contesttable {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	width:80%;
+    margin: 3em auto;
+    background-size: cover;
+	padding :2em;
+	padding-right: 5em;
+  }
+  
+  #contesttable td, #contesttable th {
+	border: 1px solid rgb(20, 20, 20);
+	padding: 8px;
+	text-align: center;
+	color:rgb(8, 8, 8);
+  }
+.tr_past
+{
+	background-color: rgba(240, 236, 236, 0.733);
+}
+.tr_running
+{
+	background-color: rgba(15, 252, 7, 0.575);
+}
+.tr_coming
+{
+	background-color:rgba(255, 235, 205, 0.425)
+}
+  
+  #contesttable th {
+	padding-top: 12px;
+	padding-bottom: 12px;
+	text-align: left;
+	background-color: rgba(14, 14, 14, 0.959);
+	text-align: center;
+	color: rgb(250, 246, 246);
+  }

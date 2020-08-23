@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<title>Contest Schedule</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<link href="/register.css" rel="stylesheet" type="text/css" media="all" />
+<link href="/contestScheduleDesign.css" rel="stylesheet" type="text/css" media="all" />
+<link href="//fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-mainbg">
+        <a class="navbar-brand navbar-logo" href="/">S<strong>Tracker</strong></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fas fa-bars text-white"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav ml-auto">
+                  <div class="hori-selector"><div class="left"></div><div class="right"></div></div>
+                  <li class="nav-item">
+                      <a class="nav-link " href="/"><i class="fas fa-tachometer-alt"></i>Home</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="/about"><i class="far fa-address-book"></i>About</a>
+                  </li>
+                  <li class="nav-item active">
+                      <a class="nav-link" href="/contestSchedule"><i class="far fa-clone"></i>Contest Schedule</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link regi" href="/register"><i class="far fa-copy"></i>SIGN UP</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link regi" href="/login"><i class="far fa-copy"></i>LOGIN</a>
+                  </li>
+              </ul>
+          </div>
+      </nav>
+     <div class="wrapper2">
+      <section class="contest-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title">
+                      <span><%=new Date().toString()%></span>
+                      <h2>Online judge contest schedule</h2>
+                    </div>
+                </div>
+            </div>
+            <% if(error!=''){ %>
+              <div class="msg2">
+                 <%=error%>
+                </div>
+              <% }
+            else {
+                    var past_contest=[];
+                        if(typeof len!= 'undefined')
+                          {
+                            for(var i=0;i<len;i++)
+                            {
+                              if(contest[i][0]=='past')
+                              {
+                                past_contest=contest[i];
+                                break;
+                              }
+                            }
+                          }
+                       if(past_contest.length>0){%>
+            <div class="row justify-content-center">
+                <div class="col-lg-4 col-md-8">
+                    <div class="ps-item">
+                        <h3 style="color: rgb(3, 3, 3)">Past contest</h3>
+                        <div class="pi-price">
+                            <h2 ><%=past_contest[1]%></h2>
+                            <span><%=past_contest[5]%></span>
+                        </div>
+                        <ul>
+                          <li style="color: rgb(240, 123, 123); font-weight: bolder; font-size: larger;">
+                            <span>Duration: </span>
+                            <%=past_contest[2]%>
+                            </li>
+                            <li>
+                              <span style="color: rgb(2, 3, 92);">HostSite: </span>
+                              <a href="https://<%=past_contest[4]%>/" target="_blank" style="color: rgb(145, 182, 250);" class="primary-btn"><%=past_contest[4]%></a>
+                            </li>
+                            <li style="color: red;">Already Finished!</li>
+                            <li>You can solved problem offline.</li>
+                            <li>Don't miss any problem.</li>
+                            
+                        </ul>
+                        <a href="<%=past_contest[3]%>" target="_blank" class="primary-btn pricing-btn">Contest Link</a>
+                        <a href="<%=past_contest[3]%>" target="_blank" class="thumb-icon"><i class="fa fa-picture-o"></i></a>
+                      </div>
+                </div>
+                        <% }
+                        
+                        else {%>
+                <div class="row justify-content-center">
+                <div class="col-lg-4 col-md-8">
+                    <div class="ps-item">
+                        <h3>Past contest</h3>
+                        <div class="pi-price">
+                            <h2>----</h2>
+                            <span>----</span>
+                        </div>
+                       
+                        <ul>
+                            <li>--</li>
+                            <li>--</li>
+                            <li>--</li>
+                            <li>--</li>
+                            <li>--</li>
+                        </ul>
+                        <a href="/profile" class="primary-btn pricing-btn">---</a>
+                        <a href="/profile" class="thumb-icon"><i class="fa fa-picture-o"></i></a>
+                    </div>
+                </div>
+                  <%}
+
+                    var running_contest=[];
+                        if(typeof len!= 'undefined')
+                          {
+                            for(var i=0;i<len;i++)
+                            {
+                              if(contest[i][0]=='running')
+                              {
+                                running_contest=contest[i];
+                                break;
+                              }
+                            }
+                          }
+                       if(running_contest.length>0){%>
+                    <div class="col-lg-4 col-md-8">
+                    <div class="ps-item middle">
+                        <h3 >Running contest</h3>
+                        <div class="pi-price">
+                            <h2 ><%=running_contest[1]%></h2>
+                            <span><%=running_contest[5]%></span>
+                        </div>
+                        <ul>
+                          <li style="color: rgb(240, 123, 123); font-weight: bolder; font-size: larger;">
+                            <span>Duration: </span>
+                            <%=running_contest[2]%>
+                            </li>
+                            <li>
+                              <span>HostSite: </span>
+                              <a href="https://<%=running_contest[4]%>/" target="_blank" style="color: rgb(145, 182, 250);" class="primary-btn"><%=running_contest[4]%></a>
+                            </li>
+                            <li style="color: red;">Hurry Up!</li>
+                            <li>Contest Running.</li>
+                            <li>Don't miss any problem.</li>
+                            
+                        </ul>
+                        <a href="<%=running_contest[3]%>" target="_blank" class="primary-btn pricing-btn">Contest Link</a>
+                        <a href="<%=running_contest[3]%>" target="_blank" class="thumb-icon"><i class="fa fa-picture-o"></i></a>
+                      </div>
+                </div>
+                        <% }
+                        
+                        else {%>
+                    <div class="col-lg-4 col-md-8">
+                    <div class="ps-item middle">
+                        <h3>Running contest</h3>
+                        <div class="pi-price">
+                            <h2>----</h2>
+                            <span>----</span>
+                        </div>
+                       
+                        <ul>
+                            <li>--</li>
+                            <li>--</li>
+                            <li>--</li>
+                            <li>--</li>
+                            <li>--</li>
+                                                    </ul>
+                        <a href="/profile" class="primary-btn pricing-btn">---</a>
+                        <a href="/profile" class="thumb-icon"><i class="fa fa-picture-o"></i></a>
+                    </div>
+                </div>
+                  <%}
+                  var coming_contest=[];
+                        if(typeof len!='undefined')
+                          {
+                            for(var i=0;i<len;i++)
+                            {
+                              if(contest[i][0]=='coming')
+                              {
+                                coming_contest=contest[i];
+                                break;
+                              }
+                            }
+                          }
+                       if(coming_contest.length>0){%>
+                      <div class="col-lg-4 col-md-8">
+                    <div class="ps-item">
+                        <h3 style="color: black;">Upcoming contest</h3>
+                        <div class="pi-price">
+                            <h2 ><%=coming_contest[1]%></h2>
+                            <span><%=coming_contest[5]%></span>
+                        </div>
+                        <ul>
+                            <li style="color: rgb(240, 123, 123); font-weight: bolder; font-size: larger;">
+                            <span>Duration: </span>
+                            <%=coming_contest[2]%>
+                            </li>
+                            <li>
+                              <span style="color: rgb(3, 3, 3)">HostSite: </span>
+                              <a href="https://<%=coming_contest[4]%>/" target="_blank" style="color: rgb(145, 182, 250);" class="primary-btn"><%=coming_contest[4]%></a>
+                            </li>
+                            <li style="color: red;">Get Ready!</li>
+                            <li>You have time for Prepartion</li>
+                            <li>Don't miss any Contest.</li>
+                            
+                        </ul>
+                        <a href="<%=coming_contest[3]%>" target="_blank" class="primary-btn pricing-btn">Contest Link</a>
+                        <a href="<%=coming_contest[3]%>" target="_blank" class="thumb-icon"><i class="fa fa-picture-o"></i></a>
+                      </div>
+                </div>
+                        <% }
+                        
+                        else {%>
+                    <div class="col-lg-4 col-md-8">
+                    <div class="ps-item">
+                        <h3>Running contest</h3>
+                        <div class="pi-price">
+                            <h2>----</h2>
+                            <span>----</span>
+                        </div>
+                       
+                        <ul>
+                            <li>--</li>
+                            <li>--</li>
+                            <li>--</li>
+                            <li>--</li>
+                            <li>--</li>
+                        </ul>
+                        <a href="/profile" class="primary-btn pricing-btn">---</a>
+                        <a href="/profile" class="thumb-icon"><i class="fa fa-picture-o"></i></a>
+                    </div>
+                </div>
+                  <%}%>
+
+
+            </div>
+        </div>
+    </section>
+    <table id="contesttable">
+      <tr>
+        <th>Contest Time</th>
+        <th>Duration</th>
+        <th>Contest Name</th>
+        <th>Host Site</th>
+        <th>Contest Phase</th>
+        <th>Contest Link</th>
+      </tr>
+      <%
+      if(typeof len!='undefined'){
+      for(var i=0;i<len;i++){
+        if(contest[i][0]=='past'){
+        %>
+      <tr class="tr_past">
+        <td><%=contest[i][1]%></td>
+        <td><%=contest[i][2]%></td>
+        <td><%=contest[i][5]%></td>
+        <td><%=contest[i][4]%></td>
+        <td><%=contest[i][0]%></td>
+        <td>  <a href="<%=contest[i][3]%>" target="_blank"><i class="far fa-copy"></i>Contest Link</a> </td>
+      </tr>
+      <% } 
+      if(contest[i][0]=='running'){
+        %>
+      <tr class="tr_running">
+        <td><%=contest[i][1]%></td>
+        <td><%=contest[i][2]%></td>
+        <td><%=contest[i][5]%></td>
+        <td><%=contest[i][4]%></td>
+        <td><%=contest[i][0]%></td>
+        <td>  <a href="<%=contest[i][3]%>" target="_blank"><i class="far fa-copy"></i>Contest Link</a> </td>
+      </tr>
+      <% } 
+      if(contest[i][0]=='coming'){
+        %>
+      <tr class="tr_coming">
+        <td><%=contest[i][1]%></td>
+        <td><%=contest[i][2]%></td>
+        <td><%=contest[i][5]%></td>
+        <td><%=contest[i][4]%></td>
+        <td><%=contest[i][0]%></td>
+        <td>  <a href="<%=contest[i][3]%>" target="_blank"><i class="far fa-copy"></i>Contest Link</a> </td>
+      </tr>
+      <% }
+      }
+      }%>
+    </table>
+  <% } %>
+
+    <ul class="colorlib-bubbles">
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+    </ul>
+    </div>
+
+  <script>
+  // ---------Responsive-navbar-active-animation-----------
+function test(){
+  var tabsNewAnim = $('#navbarSupportedContent');
+  var selectorNewAnim = $('#navbarSupportedContent').find('li').length;
+  var activeItemNewAnim = tabsNewAnim.find('.active');
+  var activeWidthNewAnimHeight = activeItemNewAnim.innerHeight();
+  var activeWidthNewAnimWidth = activeItemNewAnim.innerWidth();
+  var itemPosNewAnimTop = activeItemNewAnim.position();
+  var itemPosNewAnimLeft = activeItemNewAnim.position();
+  $(".hori-selector").css({
+    "top":itemPosNewAnimTop.top + "px", 
+    "left":itemPosNewAnimLeft.left + "px",
+    "height": activeWidthNewAnimHeight + "px",
+    "width": activeWidthNewAnimWidth + "px"
+  });
+  $("#navbarSupportedContent").on("click","li",function(e){
+    $('#navbarSupportedContent ul li').removeClass("active");
+    $(this).addClass('active');
+    var activeWidthNewAnimHeight = $(this).innerHeight();
+    var activeWidthNewAnimWidth = $(this).innerWidth();
+    var itemPosNewAnimTop = $(this).position();
+    var itemPosNewAnimLeft = $(this).position();
+    $(".hori-selector").css({
+      "top":itemPosNewAnimTop.top + "px", 
+      "left":itemPosNewAnimLeft.left + "px",
+      "height": activeWidthNewAnimHeight + "px",
+      "width": activeWidthNewAnimWidth + "px"
+    });
+  });
+}
+$(document).ready(function(){
+  setTimeout(function(){ test(); });
+});
+$(window).on('resize', function(){
+  setTimeout(function(){ test(); }, 500);
+});
+$(".navbar-toggler").click(function(){
+  setTimeout(function(){ test(); });
+});
+    </script>
+    
+</body>
+</html>

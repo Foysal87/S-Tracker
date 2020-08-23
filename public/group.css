@@ -1,0 +1,173 @@
+.searchbar{
+    height: 40px;
+    background-color: rgb(39, 38, 37);
+ 
+    }
+
+    .search_input{
+    color: white;
+    border: 0;
+    outline: 0;
+    background: none;
+    width: 0;
+    caret-color:transparent;
+    line-height: 40px;
+    transition: width 0.4s linear;
+    }
+    .main-agileinfo2{
+        width: 60%;
+        margin: 3em auto;
+        padding : 2em;
+        background: rgba(246, 248, 246, 0.151);
+        background-size: cover;
+      }
+      .main-agileinfo2 h1
+      {
+        
+        font-size: 2em;
+        text-align: center;
+        color: rgb(7, 145, 41);
+        font-weight: 100;
+        letter-spacing: 4px;
+        padding-top: 30px;
+        font-family: 'Roboto', sans-serif;
+      }
+.profile-edit-btn
+{
+  font-size: .9em;
+  color: rgb(27, 21, 21);
+  background: #02ce0cb0;
+  outline: none;
+  border: 1px solid #66031c8f;
+  cursor: pointer;
+  padding: 0.8em;
+  text-align: center;
+  -webkit-appearance: none;
+  width: 90%;
+  margin: 3em;
+  background-size: cover;
+  letter-spacing: 4px;
+}
+      .agileits-top {
+        padding: 2em;
+      }
+#err
+{
+    font-size: 1em;
+    color: rgb(12, 12, 12);
+    text-align: center;
+    font-weight: bolder;
+    width: 100%;
+    display: block;
+    padding: .9em;
+    margin: 1em 0;
+    letter-spacing: 7px;
+    font-family: 'Roboto', sans-serif;
+}
+#membertable {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	width:100%;
+    margin: 3em auto;
+    background-size: cover;
+	padding :2em;
+	padding-right: 5em;
+  }
+  
+  #membertable td, #contesttable th {
+	border: 1px solid rgb(20, 20, 20);
+  padding: 8px;
+  margin: 1px;
+	text-align: center;
+	color:rgb(8, 8, 8);
+  }
+.tr_past
+{
+	background-color: rgba(240, 236, 236, 0.733);
+}
+.tr_running
+{
+	background-color: rgba(15, 252, 7, 0.575);
+}
+.tr_coming
+{
+	background-color:rgba(96, 248, 50, 0.151)
+}
+  
+  #membertable th {
+	padding-top: 12px;
+	padding-bottom: 12px;
+  text-align: left;
+  margin: 1px;
+	background-color: rgba(0, 0, 0, 0);
+	text-align: center;
+  color: rgb(243, 241, 240);
+  border: 1px solid rgb(12, 12, 12);
+  }
+  .groupname
+  {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-size: 1em;
+    font-weight: bolder;
+    color: rgb(14, 13, 13);
+    background: #f6f7f559;
+    outline: none;
+    border: 1px solid #3d6b248f;
+    cursor: pointer;
+    padding: 0.8em;
+    text-align: center;
+    -webkit-appearance: none;
+    width: 80%;
+    margin: 7px 10%;
+    background-size: cover;
+    letter-spacing: 4px;
+  
+  }
+  #myform5 input[type="submit"] {
+    font-size: .9em;
+    color: #fff;
+    background: #e94016e0;
+    outline: none;
+    border: 1px solid #ee2602;
+    cursor: pointer;
+    padding: 0.9em;
+    -webkit-appearance: none;
+    width: 100%;
+    margin: 2em 0;
+    letter-spacing: 4px;
+  }
+  
+  #myform5 input[type="submit"]:hover {
+    -webkit-transition: .5s all;
+    -moz-transition: .5s all;
+    -o-transition: .5s all;
+    -ms-transition: .5s all;
+    transition: .5s all;
+    background: rgb(189, 14, 1);
+  }
+
+    /*
+
+    .searchbar:hover > .search_input{
+    padding: 0 10px;
+    width: 450px;
+    caret-color:red;
+    transition: width 0.4s linear;
+    }
+
+    .searchbar:hover > .search_icon{
+    background: white;
+    color: #e74c3c;
+    }
+
+    .search_icon{
+    height: 40px;
+    width: 40px;
+    float: right;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    color:white;
+    text-decoration:none;
+    }
+    */
