@@ -178,7 +178,7 @@ router.post('/groupCreate/:id',(req,res) => {
                                        }
                                        else
                                        {
-                                           ar.push(0); arr.push(0); arr.push(0);
+                                           ar.push(0); ar.push(0); ar.push(0);
                                        }
                                        if(usr2)
                                        {
@@ -188,7 +188,7 @@ router.post('/groupCreate/:id',(req,res) => {
                                       }
                                       else
                                       {
-                                          ar.push(0); arr.push(0); arr.push(0);
+                                          ar.push(0); ar.push(0); ar.push(0);
                                       }
                                       if(usr4)
                                       {

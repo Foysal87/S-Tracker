@@ -65,7 +65,7 @@
 					  </div>
 					<% } %>  
     <div class="agileits-top">
-        <form id="myfrom3" action="/profile/group/groupCreate/<%=groupid%>" method="post">
+        <form id="myfrom3" action="/profile/group/groupCreate/<%=groupid%>" method="post" autocomplete="off">
         <input type="text" name="user" placeholder="Search User For Add" onkeyup="showResult(this.value)"/>
         <p>Suggestions: <span id="txtHint"></span></p>
         <input type="submit" value="Add User">

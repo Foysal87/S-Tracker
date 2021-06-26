@@ -2,6 +2,7 @@ const express =require('express');
 
 var router =express.Router();
 const mongoose =require('mongoose');
+var usergroup=mongoose.model('userGroups');
 const mongo = require('mongodb').MongoClient;
 const User = mongoose.model('User');
 const toastr = require('express-toastr');
@@ -13,7 +14,6 @@ const request = require('request');
 const cheerio=require('cheerio');
 const puppeteer = require('puppeteer');
 var ojdetails=mongoose.model('ojdetails');
-var usergroup=mongoose.model('userGroups');
 const url ='mongodb://localhost:27017';
 const objectId =require('mongodb').ObjectId;
 var contestscheduleSchema=mongoose.model('contestSchedule');

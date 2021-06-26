@@ -54,6 +54,11 @@
     <div class="main-w3layouts wrapper">
       <div class="main-agileinfo2">
 
+        <% if(typeof msg!='undefined'){ %>
+          <div class="msg2">
+             <%=msg%>
+            </div>
+          <% } %> 
     <% if( success_msg!=''){ %>
         <div class="msg">
            <%=success_msg%>
@@ -65,11 +70,12 @@
 					  </div>
 					<% } %>  
     <div class="agileits-top">
-        <form id="myfrom3" action="/profile/friends" method="post">
+        <form id="myfrom3" action="/profile/friends" method="post" autocomplete="off">
         <input type="text" name="name" placeholder="Search Friends By Username For Add" onkeyup="showResult(this.value)"/>
         <p>Suggestions: <span id="txtHint"></span></p>
         <input type="submit" value="Add Friends">
-       </form>  
+       </form> 
+       <% if(typeof member!='undefined') { %> 
        <% if(member.length>0) {%>
         <h1 style="color:rgb(97, 192, 3);">FRIENDS</h1>
         <table id="membertable">
@@ -89,7 +95,6 @@
 
         for(var i=0;i<member.length;i++)
         { 
-         // console.log(member[i]);
           %>
           <tr class="tr_coming"> 
             <td><%=member[i][0]%></td> 
@@ -111,6 +116,7 @@
         %>
       </table>
       <% } %>
+      <%}%>
     </div>
   </div>
   <ul class="colorlib-bubbles">

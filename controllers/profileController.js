@@ -25,7 +25,7 @@ var moment = require('moment');
 
 
 router.get('/',ensureAuthenticated,(req,res) => {
-    scrap1(req); 
+  scrap1(req);
     ojUser.findOne({ username: req.user.username}, function (err, usr) {
     if (err) { return done(err); }
       ojdetails.findOne({ username:('cf'+usr.cfUsername)}, function (err, usr1) {
@@ -283,24 +283,24 @@ router.post('/info',(req,res) => {
        }
       });
   })
-function scrap1(req)
-{
-  ojUser.findOne({ username: req.user.username}, function (err, usr2) {
-
-    if (err) { return done(err); }
-  loadCf(usr2);
-  loadhackerrank(usr2);
-  loaduva(usr2);
-  loadcodechef(usr2);
-  });  
-}
-async function scrap2(req)
-{
-  await loadCf(req.body);
-  await loadhackerrank(req.body);
-  await loaduva(req.body);
-  await loadcodechef(req.body);   
-}
+  function scrap1(req)
+  {
+    ojUser.findOne({ username: req.user.username}, function (err, usr2) {
+  
+      if (err) { return done(err); }
+    loadCf(usr2);
+    loadhackerrank(usr2);
+    loaduva(usr2);
+    loadcodechef(usr2);
+    });  
+  }
+  async function scrap2(req)
+  {
+    await loadCf(req.body);
+    await loadhackerrank(req.body);
+    await loaduva(req.body);
+    await loadcodechef(req.body);   
+  }
 //cf scrap
 async function loadCf(req)
 {
@@ -400,28 +400,28 @@ async function loadhackerrank(req)
 
   var ojdetail=new ojdetails();
   if(req.hackerrankUsername!=''){
- var hackerrankurl='https://www.hackerrank.com/'+req.hackerrankUsername;
+ var hackerrankurl='https://www.hackerrank.com/'+req.hackerrankUsername+'?hr_r=1';
  puppeteer
       .launch(
-       { slowMo: 250}
-      )
-      .then(browser => browser.newPage())
-      .then(page => {
-        page.setExtraHTTPHeaders({
-          'Accept-Language': 'en-GB,en-US;q=0.9,en;q=0.8'
-         });
-         page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36')
-        return page.goto(hackerrankurl , {waitUntil: 'networkidle2',timeout: 0} ).then(function() {
-          return page.content();
-        });
-      })
+        { slowMo: 250}
+        )
+        .then(browser => browser.newPage())
+        .then(page => {
+          page.setExtraHTTPHeaders({
+            'Accept-Language': 'en-GB,en-US;q=0.9,en;q=0.8'
+           });
+           page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36')
+          return page.goto(hackerrankurl , {waitUntil: 'networkidle2',timeout: 0} ).then(function() {
+            return page.content();
+          });
+        })
       .then(html => {
         const $ = cheerio.load(html);
         if($('#hacker-competitions').length>=1){
         var r = /\d+/;
         ojdetail.rating=parseInt($('#hacker-contest-score').text());
         ojdetail.contest=parseInt($('#hacker-competitions').text());
-        ojdetail.lastContestRank=parseInt($('#content > div > div > div.theme-m.new-design > div.community-content > article > div > div.profile-right-pane > section:nth-child(5) > div > div > div:nth-child(1) > div > span.participants-count').text().match(r)[0]);
+        ojdetail.lastContestRank=0;
         ojdetail.oj='hackerrank';
         ojdetail.ojname=req.hackerrankUsername;
         ojdetail.highestRating=0;
@@ -769,18 +769,23 @@ async function loadcontest()
 router.get('/friends', ensureAuthenticated, (req,res) => {
 
   usergroup.findOne({username:req.user.username} , (err, user) => {
-    if(err) {
-      req.flash('error_msg','No User Found With this name');
-      res.redirect('/profile/friends/');
+    if(err) throw err;
+    if(!user)
+    {
+      res.render("friends",{
+        msg : "No group right now."
+    });
     }
+    else{
     res.render('friends' ,{
       member : user.friends
     })
+    }
   });
 
 });
 
-router.post('/friends', (req,res) => {
+router.post('/friends', ensureAuthenticated, (req,res) => {
 
  usergroup.findOne({username:req.user.username}, (err, us) => {
    if(err) throw err;
@@ -801,8 +806,8 @@ router.post('/friends', (req,res) => {
    }
    else{
   var ar=[];
-  ar.push(us.username);
-  ojUser.findOne({ username: req.body.name}, async function (err, usr) {
+  ar.push(req.body.name);
+  ojUser.findOne({ username: req.body.name},(err, usr) => {
       if (err) { return done(err); }
       if(!usr)
       {
@@ -832,7 +837,7 @@ router.post('/friends', (req,res) => {
                              }
                              else
                              {
-                                 ar.push(0); arr.push(0); arr.push(0);
+                                 ar.push(0); ar.push(0); ar.push(0);
                              }
                              if(usr2)
                              {
@@ -842,7 +847,7 @@ router.post('/friends', (req,res) => {
                             }
                             else
                             {
-                                ar.push(0); arr.push(0); arr.push(0);
+                                ar.push(0); ar.push(0); ar.push(0);
                             }
                             if(usr4)
                             {
