@@ -13,6 +13,7 @@ const request = require('request');
 const cheerio=require('cheerio');
 const puppeteer = require('puppeteer');
 var ojdetails=mongoose.model('ojdetails');
+var usergroup=mongoose.model('userGroups');
 const url ='mongodb://localhost:27017';
 const objectId =require('mongodb').ObjectId;
 var contestscheduleSchema=mongoose.model('contestSchedule');
@@ -144,6 +145,11 @@ function insertRecord(req,res){
                         ojuser.hackerrnakUsername='';
                         
                         ojuser.save((err,doc)=> {
+                            if(err) throw err;
+                        });
+                        var usergrp=new usergroup();
+                        usergrp.username=user.username;
+                        usergrp.save((err,doc)=> {
                             if(err) throw err;
                         });
                         req.flash('success_msg', 'Resgistration completed. Please login.')

@@ -25,6 +25,7 @@ var moment = require('moment');
 
 
 router.get('/',ensureAuthenticated,(req,res) => {
+    scrap1(req); 
     ojUser.findOne({ username: req.user.username}, function (err, usr) {
     if (err) { return done(err); }
       ojdetails.findOne({ username:('cf'+usr.cfUsername)}, function (err, usr1) {
@@ -278,11 +279,22 @@ router.post('/info',(req,res) => {
            });
        });
       //scrap              
-      scrap(req);        
+      scrap2(req);        
        }
       });
   })
-async function scrap(req)
+function scrap1(req)
+{
+  ojUser.findOne({ username: req.user.username}, function (err, usr2) {
+
+    if (err) { return done(err); }
+  loadCf(usr2);
+  loadhackerrank(usr2);
+  loaduva(usr2);
+  loadcodechef(usr2);
+  });  
+}
+async function scrap2(req)
 {
   await loadCf(req.body);
   await loadhackerrank(req.body);
@@ -317,6 +329,7 @@ async function loadCf(req)
  .then(html => {
   var $ =cheerio.load(html);
   var len1=$('div.datatable > div:nth-child(6) > table > tbody > tr').length;
+  console.log(len1);
   var r = /\d+/;
   len1--;
   ojdetail.contest=len1;
@@ -324,19 +337,19 @@ async function loadCf(req)
   ojdetail.ojname=req.cfUsername;
   ojdetail.oj='codeforces';
   if(len1){
-  ojdetail.rating=parseInt(($('div.datatable > div:nth-child(6) > table > tbody > tr:nth-child(1) > td:nth-child(6)')).text().match(r)[0]);
-  ojdetail.lastContestRank=parseInt(($('div.datatable > div:nth-child(6) > table > tbody > tr:nth-child(1) > td:nth-child(3) > a')).text().match(r)[0]);
+  ojdetail.rating=parseInt(($('div.datatable > div:nth-child(6) > table > tbody > tr:nth-child(1) > td:nth-child(7)')).text().match(r)[0]);
+  ojdetail.lastContestRank=parseInt(($('div.datatable > div:nth-child(6) > table > tbody > tr:nth-child(1) > td:nth-child(4)')).text().match(r)[0]);
   var arr =[];
   var high=0;
   var sum=0;
   //#pageContent > div.datatable > div:nth-child(6) > table > tbody > tr:nth-child(1) > td:nth-child(2) > a
   for(var i=len1,j=1;i>=1;i--,j++)
   {
-   var st='div.datatable > div:nth-child(6) > table > tbody > tr:nth-child('+j+')> td:nth-child(6)';
+   var st='div.datatable > div:nth-child(6) > table > tbody > tr:nth-child('+j+')> td:nth-child(7)';
    var d=($(st)).text().match(r)[0]; 
    high=Math.max(high,d);
     arr.push([i,d]);
-    sum+=parseInt($('div.datatable > div:nth-child(6) > table > tbody > tr:nth-child('+j+') > td:nth-child(4) > a').text().match(r)[0]);
+    sum+=parseInt($('div.datatable > div:nth-child(6) > table > tbody > tr:nth-child('+j+') > td:nth-child(5) > a').text().match(r)[0]);
   }
   ojdetail.previousRating=arr;
   ojdetail.highestRating=parseInt(high);
@@ -756,8 +769,10 @@ async function loadcontest()
 router.get('/friends', ensureAuthenticated, (req,res) => {
 
   usergroup.findOne({username:req.user.username} , (err, user) => {
-    if(err) throw err;
-    console.log(user.friends);
+    if(err) {
+      req.flash('error_msg','No User Found With this name');
+      res.redirect('/profile/friends/');
+    }
     res.render('friends' ,{
       member : user.friends
     })
